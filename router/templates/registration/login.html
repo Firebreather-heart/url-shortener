@@ -1,0 +1,171 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+	<title>Login</title>
+    <style>
+        /* Common styles */
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 32px;
+        }
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 100px;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #fff;
+            color: #444;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+            font-size: 1.2rem;
+        }
+    
+        input[type="submit"] {
+            background-color: #fff;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            width: 40%;
+            max-width: 100px;
+            font-size: 1.2rem;
+        }
+    
+        input[type="submit"]:hover {
+            background-color: #ddd;
+        }
+    
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #000;
+                color: #fff;
+            }
+    
+            input[type="text"],
+            input[type="password"],
+            input[type="email"],
+            input[type="submit"] {
+                background-color: #fff;
+                color: #444;
+            }
+        }
+    
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            form {
+                margin-top: 50px;
+            }
+    
+            input[type="submit"] {
+                font-size: 1rem;
+                padding: 8px 15px;
+            }
+    
+            input[type="text"],
+            input[type="password"],
+            input[type="email"] {
+                font-size: 1rem;
+            }
+        }
+    /* Set sizing and vertical centering. */
+    body,
+    html {
+      height: 100%;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    html,
+    body {
+      padding: 0 !important;
+    }
+
+    body {
+      display: table;
+    }
+
+    center {
+      height: 100%;
+      width: 100%;
+      min-height: 100%;
+      min-width: 100%;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    /* Fix color of title. */
+
+    .title {
+      color: #000000 !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #000;
+        color: #fff;
+      }
+
+      .title {
+        color: #FFFFFF !important;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      input[type="submit"] {
+        background-color: #fff;
+        color: #444;
+      }
+    }
+  </style>
+</head>
+<body>
+  <center>
+    <h1>URL Shortener</h1>
+    <form method="post">
+        {{ user_form.non_field_errors }}
+            {% if user_form.subject.errors %}
+            <ol>
+                {% for error in user_form.subject.errors %}
+                <li><strong class="w3-text-red">{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+            {% endif %}
+        {% csrf_token %}
+        {{form.as_p}}
+      <input type="submit" value="Log In">
+    </form>
+    <div class="w3-red  w3-top" id="timecatch">
+        {% for message in messages %}
+            <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }} 
+        {% endfor %}
+    </div>
+    <div style="margin-top: 10px;">
+        <a href="{% url 'signup' %}" style="text-decoration: none;color: aquamarine;">or Sign up</a>
+    </div>
+  </center>
+</body>
+</html>
+

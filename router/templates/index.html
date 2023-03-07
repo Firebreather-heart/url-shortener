@@ -1,0 +1,55 @@
+<html>
+    {% load static %}
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'css/w3.css' %}" /> -->
+    <title>URL Shortener</title>
+  </head>
+  <body>
+    <center>
+      <a class="title" href="./" style="text-decoration: none;">
+        <h1>URL Shortener</h1>
+      </a>
+      <br />
+      <form method="POST">
+        {% csrf_token %}
+        <div>
+          <input type="url" name="destination" placeholder="enter a url" required />
+          <input
+            type="text"
+            name="custom_addr"
+            placeholder="desired url"
+            style="margin-top: 10px;"
+          />
+        </div>
+        <br />
+        <input type="submit" value="shorten!" />
+      </form>
+      <div class="w3-red  w3-top" id="timecatch">
+        {% for message in messages %}
+            <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }} 
+        {% endfor %}
+    </div>
+    <div class="">
+      <div>
+        <h3>Your links</h3>
+        {% for link in urls %}
+          <div>
+            <a href="{{link.destination}}"><span>{{link.custom_addr}}</span></a> <span> - visited {{link.metrics.visits}} times</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    </center>
+  </body>
+</html>
